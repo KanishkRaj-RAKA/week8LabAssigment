@@ -1,0 +1,47 @@
+//  Write a program to transpose a matrix where the memory area of the matrix is to be dynamically allocated.
+#include <stdio.h>
+#include <stdlib.h>
+int** allocate_matrix(int rows, int cols) {
+    int **matrix = (int **)malloc(rows * sizeof(int *));
+    for (int i = 0; i < rows; i++) {
+        matrix[i] = (int *)malloc(cols * sizeof(int));
+    }
+    return matrix;
+}
+void deallocate_matrix(int **matrix, int rows) {
+    for (int i = 0; i < rows; i++) {
+        free(matrix[i]);
+    }
+    free(matrix);
+}
+void transpose_matrix(int **matrix, int rows, int cols) {
+    int **transposed = allocate_matrix(cols, rows); 
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            transposed[j][i] = matrix[i][j];
+        }
+    }
+    printf("Transposed Matrix:\n");
+    for (int i = 0; i < cols; i++) {
+        for (int j = 0; j < rows; j++) {
+            printf("%d ", transposed[i][j]);
+        }
+        printf("\n");
+    }
+    deallocate_matrix(transposed, cols);
+}
+int main() {
+    int rows, cols;
+    printf("Enter the number of rows and columns of the matrix: ");
+    scanf("%d %d", &rows, &cols);
+    int **matrix = allocate_matrix(rows, cols);
+    printf("Enter the elements of the matrix:\n");
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            scanf("%d", &matrix[i][j]);
+        }
+    }
+    transpose_matrix(matrix, rows, cols);
+    deallocate_matrix(matrix, rows);
+    return 0;
+}
