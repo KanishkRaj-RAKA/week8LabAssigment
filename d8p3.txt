@@ -1,0 +1,35 @@
+//Write a program to store n number of integers initially in a dynamically allocated memory and print the value of the maximum element where n is a user input. Then accept an integer m from the user and add m numbers of elements more to the existing list and again find the maximum element of the new list.
+#include <stdio.h>
+#include <stdlib.h>
+int findMax(int *arr, int size) {
+    int max = arr[0];
+    for (int i = 1; i < size; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    return max;
+}
+int main() {
+    int n, m;
+    printf("Enter the initial number of elements: ");
+    scanf("%d", &n);
+    int *arr = (int *)malloc(n * sizeof(int));
+    printf("Enter %d integers:\n", n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+    int max_initial = findMax(arr, n);
+    printf("Maximum element of the initial array: %d\n", max_initial);
+    printf("Enter the number of additional elements to add: ");
+    scanf("%d", &m);
+    arr = (int *)realloc(arr, (n + m) * sizeof(int));
+    printf("Enter %d more integers:\n", m);
+    for (int i = n; i < n + m; i++) {
+        scanf("%d", &arr[i]);
+    }
+    int max_updated = findMax(arr, n + m);
+    printf("Maximum element of the updated array: %d\n", max_updated);
+    free(arr);
+    return 0;
+}
