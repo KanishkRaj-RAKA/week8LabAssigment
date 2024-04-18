@@ -1,0 +1,58 @@
+//Write a program using pointers to delete the duplicate elements of an array. The array must be declared dynamically.
+#include <stdio.h>
+#include <stdlib.h>
+int* deleteDuplicates(int arr[], int *size) 
+{
+    if (*size <= 1) 
+    {
+        return arr;
+    }
+    int i,j,k;
+    for (i = 0; i < *size - 1; i++) 
+    {
+        for (j = i + 1; j < *size;) 
+        {
+            if (arr[i] == arr[j]) 
+            {
+                for (k = j; k < *size - 1; k++) 
+                {
+                    arr[k] = arr[k + 1];    
+                }
+                (*size)--;
+            } 
+            else 
+            {
+                j++;
+            }
+        }
+    }
+    return arr;
+}
+int main() 
+{
+    int n, i;
+    printf("Enter the size of the array: ");
+    scanf("%d", &n);
+    int* arr = (int*)malloc(n * sizeof(int));
+    if (arr == NULL) 
+    {
+        printf("Error!\n");
+        
+    }
+    printf("Enter the elements: ");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+    printf("\nArray you entered is: ");
+    for (i = 0; i < n; i++)
+        printf("%d\t",arr[i]);
+    arr = deleteDuplicates(arr, &n);
+    printf("\nArray after deleting duplicates is: ");
+    for (i = 0; i < n; i++) 
+    {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+    free(arr);
+    return 0;
+}
